@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { GroupTask } from "./components/GroupTask/GroupTask";
+import { Header } from "./components/Header/Header";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <div className="main">
+        <GroupTask section={{ id: 1, months: "January - March" }} />
+        <GroupTask section={{ id: 2, months: "April - June" }} />
+        <GroupTask section={{ id: 3, months: "July - September" }} />
+        <GroupTask section={{ id: 4, months: "October - December" }} />
+      </div>
     </div>
   );
 }

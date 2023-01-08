@@ -1,0 +1,12 @@
+.container {
+  height: 64px;
+  border-bottom: 2px solid #e0e0e0;
+  align-items: center;
+  justify-content: left;
+  display: flex;
+}
+
+.heading {
+  font-weight: 600;
+  margin-left: 16px;
+}
