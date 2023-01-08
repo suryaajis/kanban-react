@@ -1,9 +1,9 @@
 .group-container {
-  background-color: white;
   margin: 16px;
   padding: 16px;
   box-sizing: border-box;
   width: 326px;
+  height: fit-content;
 }
 
 .badge {
@@ -20,7 +20,7 @@
 
 .month {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .task-1 {

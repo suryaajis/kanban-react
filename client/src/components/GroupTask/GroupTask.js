@@ -10,6 +10,12 @@ export const GroupTask = (props) => {
         <p className="badge-text">Group Task {id}</p>
       </div>
       <p className="month">{months}</p>
+
+      {props.children}
+      <div>
+        <div></div>
+        <p>New task</p>
+      </div>
     </div>
   );
 };
