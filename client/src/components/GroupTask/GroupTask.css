@@ -6,6 +6,30 @@
   height: fit-content;
 }
 
+.task-1 {
+  border-radius: 4px;
+  border: 1px solid #01959f;
+  background-color: #f7feff;
+}
+
+.task-2 {
+  border-radius: 4px;
+  border: 1px solid #feeabc;
+  background-color: #fffcf5;
+}
+
+.task-3 {
+  border-radius: 4px;
+  border: 1px solid #f5b1b7;
+  background-color: #fffafa;
+}
+
+.task-4 {
+  border-radius: 4px;
+  border: 1px solid #b8dbca;
+  background-color: #f8fbf9;
+}
+
 .badge {
   width: 88px;
   height: 24px;
@@ -21,28 +45,83 @@
 .month {
   font-size: 12px;
   font-weight: 600;
+  margin: 8px 0;
 }
 
-.task-1 {
+.btn-task {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 78px;
+  height: 20px;
+  margin-top: 8px;
   border-radius: 4px;
-  border: 1px solid #01959f;
-  background-color: #F7FEFF;
 }
 
-.task-2 {
-  border-radius: 4px;
-  border: 1px solid #FEEABC;
-  background-color: #FFFCF5;
+.btn-task:hover {
+  cursor: pointer;
 }
 
-.task-3 {
-  border-radius: 4px;
-  border: 1px solid #F5B1B7;
-  background-color: #FFFAFA;
+.btn-text {
+  font-weight: 400;
+  font-size: 12px;
 }
 
-.task-4 {
+.body input {
+  border: 1px solid #E0E0E0;
   border-radius: 4px;
-  border: 1px solid #B8DBCA;
-  background-color: #F8FBF9;
+  background-color: white;
+  padding: 8px 16px;
+}
+
+.body #name {
+  width: 80%;
+}
+
+.body #progress {
+  width: 40%;
+}
+
+.head {
+  padding-bottom: 24px;
+}
+
+label p {
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+label input {
+  margin-bottom: 16px;
+}
+
+.foot {
+  justify-content: flex-end;
+  display: flex;
+  padding-top: 24px;
+}
+
+.modal-btn {
+  background-color: white;
+  height: 32px;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  padding: 4px 16px;
+  font-size: 12px;
+}
+
+.modal-btn:hover {
+  cursor: pointer;
+  background-color: #E0E0E0;
+}
+
+.success-btn {
+  background-color: #01959F;
+  color: white;
+  margin-left: 8px;
+}
+
+.success-btn:hover {
+  background-color: #005b62;
 }
