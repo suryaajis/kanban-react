@@ -13,12 +13,12 @@ export async function login(data) {
   return response.json();
 }
 
-export async function fetchGroupTodos() {
+export async function fetchGroupTodos(auth_token) {
   const response = await fetch(`${baseUrl}/todos`, {
     method: "GET",
     headers: {
       "Content-type": "application/json",
-      Authorization: `Bearer ${token}`, // notice the Bearer before your to
+      Authorization: `Bearer ${auth_token}`, // notice the Bearer before your to
     },
   });
   return response.json();
