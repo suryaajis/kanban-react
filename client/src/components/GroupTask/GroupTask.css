@@ -8,30 +8,30 @@
 
 .task-1 {
   border-radius: 4px;
-  border: 1px solid #01959f;
+  border: 2px solid #01959f;
   background-color: #f7feff;
 }
 
 .task-2 {
   border-radius: 4px;
-  border: 1px solid #feeabc;
+  border: 2px solid #feeabc;
   background-color: #fffcf5;
 }
 
 .task-3 {
   border-radius: 4px;
-  border: 1px solid #f5b1b7;
+  border: 2px solid #f5b1b7;
   background-color: #fffafa;
 }
 
 .task-4 {
   border-radius: 4px;
-  border: 1px solid #b8dbca;
+  border: 2px solid #b8dbca;
   background-color: #f8fbf9;
 }
 
 .badge {
-  width: 88px;
+  width: 90px;
   height: 24px;
   box-sizing: border-box;
 }
@@ -40,6 +40,22 @@
   font-weight: 400;
   font-size: 12px;
   margin: 2px 8px;
+}
+
+.text-1 {
+  color: #01959F;
+}
+
+.text-2 {
+  color: #FA9810;
+}
+
+.text-3 {
+  color: #E11428;
+}
+
+.text-4 {
+  color: #43936C;
 }
 
 .month {
@@ -68,7 +84,7 @@
 }
 
 .body input {
-  border: 1px solid #E0E0E0;
+  border: 2px solid #E0E0E0;
   border-radius: 4px;
   background-color: white;
   padding: 8px 16px;
@@ -105,7 +121,7 @@ label input {
 .modal-btn {
   background-color: white;
   height: 32px;
-  border: 1px solid #E0E0E0;
+  border: 2px solid #E0E0E0;
   border-radius: 4px;
   padding: 4px 16px;
   font-size: 12px;

@@ -14,13 +14,13 @@ export const GroupTask = (props) => {
   };
 
   const handleClose = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   return (
     <div className={`group-container ${"task-" + id}`}>
       <div className={`badge ${"task-" + id}`}>
-        <p className="badge-text">Group Task {id}</p>
+        <p className={`badge-text ${"text-" + id}`}>Group Task {id}</p>
       </div>
       <p className="month">{months}</p>
       {props.children}
@@ -42,7 +42,9 @@ export const GroupTask = (props) => {
           </form>
         </div>
         <div className="foot">
-          <button className="modal-btn" onClick={handleClose}>Cancel</button>
+          <button className="modal-btn" onClick={handleClose}>
+            Cancel
+          </button>
           <button className="modal-btn success-btn">Save Task</button>
         </div>
       </Modal>
