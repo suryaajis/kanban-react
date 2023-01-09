@@ -51,4 +51,6 @@
 
 .setting:hover {
   cursor: pointer;
+  background-color: #EDEDED;
+  border-radius: 4px;
 }

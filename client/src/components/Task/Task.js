@@ -3,6 +3,7 @@ import { fetchListTodos, postTodos } from "../../api/server";
 import "./Task.css";
 import { IoMdAddCircleOutline, IoMdCheckmarkCircle } from "react-icons/io";
 import { Modal } from "../Modal/Modal";
+import { Dropdown } from "../Dropdown/Dropdown";
 
 export const Task = (props) => {
   const { group } = props;
@@ -10,6 +11,10 @@ export const Task = (props) => {
   const [listTodos, setListTodos] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [openDropdown, setOpenDropdown] = React.useState(false);
+  const [todoItem, setTodoItem] = useState({
+    id: null,
+  });
   const [input, setInput] = useState({
     name: "",
     progress: "",
@@ -36,6 +41,11 @@ export const Task = (props) => {
 
   const handleClose = () => {
     setShowModal(false);
+  };
+
+  const handleDropdown = (item) => {
+    setTodoItem(item);
+    setOpenDropdown(!openDropdown);
   };
 
   return (
@@ -72,7 +82,16 @@ export const Task = (props) => {
                         `${el.progress_percentage}%`
                       )}
                     </p>
-                    <hr className="setting" />
+                    {todoItem.id === el.id ? (
+                      <Dropdown open={openDropdown} />
+                    ) : (
+                      <></>
+                    )}
+
+                    <hr
+                      className="setting"
+                      onClick={() => handleDropdown(el)}
+                    />
                   </div>
                 </div>
               </div>
