@@ -47,7 +47,7 @@ export async function fetchListTodos(id) {
   return response.json();
 }
 
-export async function postTodos(id, data) {
+export async function postTodo(id, data) {
   const response = await fetch(`${baseUrl}/todos/${id}/items`, {
     method: "POST",
     headers: {
@@ -56,8 +56,35 @@ export async function postTodos(id, data) {
     },
     body: JSON.stringify(data),
   });
-  
-  // fetchListTodos()
+  return response.json();
+}
 
+export async function editTodo(group_id, item_id, data) {
+  const response = await fetch(
+    `${baseUrl}/todos/${group_id}/items/${item_id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`, // notice the Bearer before your to
+      },
+      body: JSON.stringify(data),
+    }
+  );
+  return response.json();
+}
+
+export async function deleteTodo(group_id, item_id, data) {
+  const response = await fetch(
+    `${baseUrl}/todos/${group_id}/items/${item_id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`, // notice the Bearer before your to
+      },
+      body: JSON.stringify(data),
+    }
+  );
   return response.json();
 }

@@ -1,12 +1,12 @@
 .dropdown {
   position: relative;
-  left: 20px;
+  left: 30px;
 }
 
 .menu {
   position: absolute;
   list-style-type: none;
-  margin: 5px 0;
+  margin: 10px 0;
   padding: 0;
   width: 240px;
   background: #ffffff;
@@ -24,13 +24,16 @@
   color: #01959F;
 }
 
+.menu-delete:hover {
+  color: #E11428;
+}
+
 .menu > li {
   width: 80%;
   margin-left: 10px;
   background-color: white;
   padding: 8px 16px;
 }
-
 
 .menu > li > p {
   background-color: #ffffff;

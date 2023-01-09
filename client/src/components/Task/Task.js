@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchListTodos, postTodos } from "../../api/server";
+import { editTodo, fetchListTodos, postTodo } from "../../api/server";
 import "./Task.css";
 import { IoMdAddCircleOutline, IoMdCheckmarkCircle } from "react-icons/io";
 import { Modal } from "../Modal/Modal";
@@ -12,10 +12,12 @@ export const Task = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [openDropdown, setOpenDropdown] = React.useState(false);
+  const [modalStatus, setModalStatus] = useState("Create");
   const [todoItem, setTodoItem] = useState({
     id: null,
   });
   const [input, setInput] = useState({
+    id: null,
     name: "",
     progress: "",
   });
@@ -26,19 +28,6 @@ export const Task = (props) => {
       .catch((err) => console.log(err));
   }, [group.item.id, refresh]);
 
-  const handleSave = () => {
-    const payload = {
-      name: input.name,
-      progress_percentage: input.progress,
-    };
-
-    postTodos(group.item.id, payload)
-      .then((result) => setRefresh(!refresh))
-      .catch((err) => console.log(err));
-
-    setShowModal(false);
-  };
-
   const handleClose = () => {
     setShowModal(false);
   };
@@ -46,6 +35,43 @@ export const Task = (props) => {
   const handleDropdown = (item) => {
     setTodoItem(item);
     setOpenDropdown(!openDropdown);
+  };
+
+  const handleEditModal = (item) => {
+    setOpenDropdown(!openDropdown);
+    setModalStatus("Edit");
+    setShowModal(true);
+    setInput({
+      id: item.id,
+      name: item.name,
+      progress: item.progress_percentage,
+    });
+  };
+
+  const handleSave = () => {
+    const payload = {
+      name: input.name,
+      progress_percentage: input.progress,
+    };
+
+    postTodo(group.item.id, payload)
+      .then((result) => setRefresh(!refresh))
+      .catch((err) => console.log(err));
+
+    setShowModal(false);
+  };
+
+  const handleChange = () => {
+    const payload = {
+      name: input.name,
+      target_todo_id: todoItem.todo_id,
+    };
+
+    editTodo(group.item.id, input.id, payload)
+      .then((result) => setRefresh(!refresh))
+      .catch((err) => console.log(err));
+
+    setShowModal(false);
   };
 
   return (
@@ -83,7 +109,11 @@ export const Task = (props) => {
                       )}
                     </p>
                     {todoItem.id === el.id ? (
-                      <Dropdown open={openDropdown} />
+                      <Dropdown
+                        open={openDropdown}
+                        handleEditModal={handleEditModal}
+                        item={el}
+                      />
                     ) : (
                       <></>
                     )}
@@ -106,7 +136,7 @@ export const Task = (props) => {
 
       <Modal show={showModal}>
         <div className="head">
-          <h3>Create Task</h3>
+          <h3>{modalStatus} Task</h3>
         </div>
         <div className="body">
           <form>
@@ -127,6 +157,7 @@ export const Task = (props) => {
                 id="progress"
                 name="progress"
                 value={input.progress}
+                disabled={modalStatus === "Edit"}
                 onChange={(event) =>
                   setInput({ ...input, progress: event.target.value })
                 }
@@ -138,8 +169,11 @@ export const Task = (props) => {
           <button className="modal-btn" onClick={handleClose}>
             Cancel
           </button>
-          <button onClick={handleSave} className="modal-btn success-btn">
-            Save Task
+          <button
+            onClick={modalStatus === "Create" ? handleSave : handleChange}
+            className="modal-btn success-btn"
+          >
+            Save {modalStatus === "Create" ? "Task" : "Change"}
           </button>
         </div>
       </Modal>
