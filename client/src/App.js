@@ -3,18 +3,10 @@ import { GroupTask } from "./components/GroupTask/GroupTask";
 import { Task } from "./components/Task/Task";
 import { Header } from "./components/Header/Header";
 import { useEffect, useState } from "react";
-import { fetchTodos, login } from "./api/server";
-
-const list1 = [
-  "Bundle interplenetary analytics for improved itransmission",
-  'Re-design the zero-g doggie bags, No more spills"!',
-];
-const list2 = ["Data Migration and Culture End Game"];
-const list3 = ["Create kanban board with react in one day just a mini project"];
+import { fetchGroupTodos, login } from "./api/server";
 
 function App() {
-
-  const [listGroup, setListGroup] = useState([])
+  const [listGroup, setListGroup] = useState([]);
 
   useEffect(() => {
     const data = {
@@ -25,35 +17,32 @@ function App() {
     login(data)
       .then(({ auth_token }) => localStorage.setItem("auth_token", auth_token))
       .catch((error) => console.log(error));
-    
-    fetchTodos()
-    .then(result => console.log(result))
-    .catch(err => console.log(err))
-    
+
+    fetchGroupTodos()
+      .then((result) => {
+        setListGroup(result);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
     <div className="App">
       <Header />
       <div className="main">
-        <GroupTask section={{ id: 1, months: "January - March" }}>
-          {list3.map((el) => {
-            return <Task item={el} />;
-          })}
-        </GroupTask>
-        <GroupTask section={{ id: 2, months: "April - June" }}>
-          {list2.map((el) => {
-            return <Task item={el} />;
-          })}
-        </GroupTask>
-        <GroupTask section={{ id: 3, months: "July - September" }}>
-          <Task item={null} />
-        </GroupTask>
-        <GroupTask section={{ id: 4, months: "October - December" }}>
-          {list1.map((el) => {
-            return <Task item={el} />;
-          })}
-        </GroupTask>
+        {listGroup.map((el, idx) => {
+          return (
+            <GroupTask
+              section={{
+                id: idx + 1,
+                group_id: el.id,
+                months: el.description,
+              }}
+              key={idx}
+            >
+              <Task group={{ id: idx + 1, item: el }} />
+            </GroupTask>
+          );
+        })}
       </div>
     </div>
   );
