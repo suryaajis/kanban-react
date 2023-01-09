@@ -32,14 +32,18 @@ function App() {
         {listGroup.map((el, idx) => {
           return (
             <GroupTask
+              key={idx}
               section={{
                 id: idx + 1,
                 group_id: el.id,
                 months: el.description,
               }}
-              key={idx}
             >
-              <Task group={{ id: idx + 1, item: el }} />
+              <Task
+                group={{ id: idx + 1, item: el }}
+                nextGroup={listGroup[idx + 1]}
+                prevGroup={listGroup[idx - 1]}
+              />
             </GroupTask>
           );
         })}

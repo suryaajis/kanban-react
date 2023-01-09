@@ -9,6 +9,7 @@ export const Dropdown = ({
   item,
   handleEditModal,
   handleDeleteModal,
+  handleMove,
   group,
 }) => {
   return (
@@ -18,14 +19,22 @@ export const Dropdown = ({
     >
       {open ? (
         <ul className="menu">
-          <li className="menu-item">
-            <IoMdArrowRoundForward />
-            <p>Menu Right</p>
-          </li>
-          <li className="menu-item">
-            <IoMdArrowRoundBack />
-            <p>Menu Left</p>
-          </li>
+          {group.id !== 4 ? (
+            <li className="menu-item" onClick={() => handleMove("right", item)}>
+              <IoMdArrowRoundForward />
+              <p>Menu Right</p>
+            </li>
+          ) : (
+            <></>
+          )}
+          {group.id !== 1 ? (
+            <li className="menu-item" onClick={() => handleMove("left", item)}>
+              <IoMdArrowRoundBack />
+              <p>Menu Left</p>
+            </li>
+          ) : (
+            <></>
+          )}
           <li className="menu-item" onClick={() => handleEditModal(item)}>
             <BiEditAlt size={20} />
             <p>Edit</p>

@@ -6,7 +6,11 @@ import {
   postTodo,
 } from "../../api/server";
 import "./Task.css";
-import { IoMdAddCircleOutline, IoMdCheckmarkCircle } from "react-icons/io";
+import {
+  IoMdAddCircleOutline,
+  IoMdCheckmarkCircle,
+  IoMdClose,
+} from "react-icons/io";
 import { Modal } from "../Modal/Modal";
 import { Dropdown } from "../Dropdown/Dropdown";
 
@@ -32,7 +36,8 @@ export const Task = (props) => {
     fetchListTodos(group.item.id)
       .then((result) => setListTodos(result))
       .catch((err) => console.log(err));
-  }, [group.item.id, refresh]);
+
+  }, [group.item.id, refresh, listTodos]);
 
   const handleClose = () => {
     clearPayload();
@@ -46,6 +51,7 @@ export const Task = (props) => {
     });
     setShowModal(false);
     setShowModalDelete(false);
+    setOpenDropdown(false);
   };
 
   const handleDropdown = (item) => {
@@ -110,6 +116,23 @@ export const Task = (props) => {
     setShowModalDelete(false);
   };
 
+  const handleMove = (move, item) => {
+    let payload = {
+      name: item.name,
+    };
+    if (move === "right") {
+      payload.target_todo_id = props.nextGroup.id;
+    } else if (move === "left") {
+      payload.target_todo_id = props.prevGroup.id;
+    }
+
+    editTodo(group.item.id, item.id, payload)
+      .then((result) => setRefresh(!refresh))
+      .catch((err) => console.log(err));
+
+    clearPayload();
+  };
+
   return (
     <div>
       {listTodos.length > 0 ? (
@@ -149,6 +172,7 @@ export const Task = (props) => {
                         open={openDropdown}
                         handleEditModal={handleEditModal}
                         handleDeleteModal={handleDeleteModal}
+                        handleMove={handleMove}
                         item={el}
                         group={group}
                       />
@@ -175,6 +199,7 @@ export const Task = (props) => {
       <Modal show={showModal}>
         <div className="head">
           <h3>{modalStatus} Task</h3>
+          <IoMdClose size={25} onClick={() => clearPayload()} />
         </div>
         <div className="body">
           <form>
@@ -219,6 +244,7 @@ export const Task = (props) => {
       <Modal show={showModalDelete}>
         <div className="head">
           <h3>Delete Task</h3>
+          <IoMdClose size={25} onClick={() => clearPayload()} />
         </div>
 
         <div className="body">
