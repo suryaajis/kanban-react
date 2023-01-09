@@ -15,14 +15,15 @@ function App() {
     };
 
     login(data)
-      .then(({ auth_token }) => localStorage.setItem("auth_token", auth_token))
-      .catch((error) => console.log(error));
-
-    fetchGroupTodos()
-      .then((result) => {
-        setListGroup(result);
+      .then(({ auth_token }) => {
+        localStorage.setItem("auth_token", auth_token);
+        fetchGroupTodos()
+          .then((result) => {
+            setListGroup(result);
+          })
+          .catch((err) => console.log(err));
       })
-      .catch((err) => console.log(err));
+      .catch((error) => console.log(error));
   }, []);
 
   return (
