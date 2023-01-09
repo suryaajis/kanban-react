@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchListTodos, postTodos } from "../../api/server";
 import "./Task.css";
-import { IoMdAddCircleOutline } from "react-icons/io";
+import { IoMdAddCircleOutline, IoMdCheckmarkCircle } from "react-icons/io";
 import { Modal } from "../Modal/Modal";
 
 export const Task = (props) => {
@@ -50,9 +50,28 @@ export const Task = (props) => {
                   <hr className="divider" />
                   <div className="progress-container">
                     <div className="progress-bar">
-                      <div className={`progress-value`}></div>
+                      <div
+                        style={{
+                          height: "16px",
+                          width: `${el.progress_percentage}%`,
+                          backgroundColor:
+                            el.progress_percentage === 100
+                              ? "#43936C"
+                              : "#01959F",
+                          borderRadius:
+                            el.progress_percentage === 100
+                              ? "12px"
+                              : "12px 0 0 12px",
+                        }}
+                      ></div>
                     </div>
-                    <p className="progress-text">{el.progress_percentage}%</p>
+                    <p className="progress-text">
+                      {el.progress_percentage === 100 ? (
+                        <IoMdCheckmarkCircle size={16} color={"#43936C"} />
+                      ) : (
+                        `${el.progress_percentage}%`
+                      )}
+                    </p>
                     <hr className="setting" />
                   </div>
                 </div>
