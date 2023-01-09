@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { editTodo, fetchListTodos, postTodo } from "../../api/server";
+import {
+  deleteTodo,
+  editTodo,
+  fetchListTodos,
+  postTodo,
+} from "../../api/server";
 import "./Task.css";
 import { IoMdAddCircleOutline, IoMdCheckmarkCircle } from "react-icons/io";
 import { Modal } from "../Modal/Modal";
@@ -8,10 +13,11 @@ import { Dropdown } from "../Dropdown/Dropdown";
 export const Task = (props) => {
   const { group } = props;
 
-  const [listTodos, setListTodos] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [openDropdown, setOpenDropdown] = React.useState(false);
+  const [listTodos, setListTodos] = useState([]);
   const [modalStatus, setModalStatus] = useState("Create");
   const [todoItem, setTodoItem] = useState({
     id: null,
@@ -29,7 +35,17 @@ export const Task = (props) => {
   }, [group.item.id, refresh]);
 
   const handleClose = () => {
+    clearPayload();
+  };
+
+  const clearPayload = () => {
+    setInput({
+      id: null,
+      name: "",
+      progress: "",
+    });
     setShowModal(false);
+    setShowModalDelete(false);
   };
 
   const handleDropdown = (item) => {
@@ -38,9 +54,21 @@ export const Task = (props) => {
   };
 
   const handleEditModal = (item) => {
+    clearPayload();
     setOpenDropdown(!openDropdown);
     setModalStatus("Edit");
     setShowModal(true);
+    setInput({
+      id: item.id,
+      name: item.name,
+      progress: item.progress_percentage,
+    });
+  };
+
+  const handleDeleteModal = (item) => {
+    clearPayload();
+    setOpenDropdown(!openDropdown);
+    setShowModalDelete(true);
     setInput({
       id: item.id,
       name: item.name,
@@ -74,11 +102,19 @@ export const Task = (props) => {
     setShowModal(false);
   };
 
+  const handleRemove = () => {
+    deleteTodo(group.item.id, input.id)
+      .then((result) => setRefresh(!refresh))
+      .catch((err) => console.log(err));
+
+    setShowModalDelete(false);
+  };
+
   return (
     <div>
       {listTodos.length > 0 ? (
         <>
-          {listTodos.map((el) => {
+          {listTodos.map((el, index) => {
             return (
               <div className="task-container" key={el.id}>
                 <div>
@@ -112,7 +148,9 @@ export const Task = (props) => {
                       <Dropdown
                         open={openDropdown}
                         handleEditModal={handleEditModal}
+                        handleDeleteModal={handleDeleteModal}
                         item={el}
+                        group={group}
                       />
                     ) : (
                       <></>
@@ -178,7 +216,34 @@ export const Task = (props) => {
         </div>
       </Modal>
 
-      <div className="btn-task" onClick={() => setShowModal(!showModal)}>
+      <Modal show={showModalDelete}>
+        <div className="head">
+          <h3>Delete Task</h3>
+        </div>
+
+        <div className="body">
+          <p>
+            Are you want to delete this task? your action can't be reverted.
+          </p>
+        </div>
+
+        <div className="foot">
+          <button className="modal-btn" onClick={handleClose}>
+            Cancel
+          </button>
+          <button onClick={handleRemove} className="modal-btn delete-btn">
+            Delete
+          </button>
+        </div>
+      </Modal>
+
+      <div
+        className="btn-task"
+        onClick={() => {
+          clearPayload();
+          setShowModal(true);
+        }}
+      >
         <IoMdAddCircleOutline />
         <p className="btn-text">New task</p>
       </div>

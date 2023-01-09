@@ -74,7 +74,7 @@ export async function editTodo(group_id, item_id, data) {
   return response.json();
 }
 
-export async function deleteTodo(group_id, item_id, data) {
+export async function deleteTodo(group_id, item_id) {
   const response = await fetch(
     `${baseUrl}/todos/${group_id}/items/${item_id}`,
     {
@@ -83,8 +83,7 @@ export async function deleteTodo(group_id, item_id, data) {
         "Content-type": "application/json",
         Authorization: `Bearer ${token}`, // notice the Bearer before your to
       },
-      body: JSON.stringify(data),
     }
   );
-  return response.json();
+  return response
 }
