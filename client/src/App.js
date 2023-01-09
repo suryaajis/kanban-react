@@ -2,6 +2,8 @@ import "./App.css";
 import { GroupTask } from "./components/GroupTask/GroupTask";
 import { Task } from "./components/Task/Task";
 import { Header } from "./components/Header/Header";
+import { useEffect, useState } from "react";
+import { fetchTodos, login } from "./api/server";
 
 const list1 = [
   "Bundle interplenetary analytics for improved itransmission",
@@ -11,6 +13,25 @@ const list2 = ["Data Migration and Culture End Game"];
 const list3 = ["Create kanban board with react in one day just a mini project"];
 
 function App() {
+
+  const [listGroup, setListGroup] = useState([])
+
+  useEffect(() => {
+    const data = {
+      email: "surya@mail.com",
+      password: "surya",
+    };
+
+    login(data)
+      .then(({ auth_token }) => localStorage.setItem("auth_token", auth_token))
+      .catch((error) => console.log(error));
+    
+    fetchTodos()
+    .then(result => console.log(result))
+    .catch(err => console.log(err))
+    
+  }, []);
+
   return (
     <div className="App">
       <Header />
